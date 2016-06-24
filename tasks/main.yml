@@ -23,6 +23,6 @@
 - name: Run initial Command for testing
   command: '/opt/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail'
 
-- name: Add Crontab config
-  copy: src=cloudwatch_cron mode=644 owner=root group=root dest=/etc/cron.d/cloudwatch_memory
+- name: Add Cronjob
+  cron: name="Memory Statistics" minute=1 job="/opt/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron"
   sudo: yes
