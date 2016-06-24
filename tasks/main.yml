@@ -18,7 +18,7 @@
   unarchive: src=/tmp/CloudWatchMonitoringScripts-1.2.1.zip dest=/opt/ copy=no
 
 - name: Remove tar
-  file: src=/tmp/CloudWatchMonitoringScripts-1.2.1.zip state=absent
+  file: path=/tmp/CloudWatchMonitoringScripts-1.2.1.zip state=absent
 
 - name: Run initial Command for testing
   command: '/opt/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail'
