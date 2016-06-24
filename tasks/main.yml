@@ -1,0 +1,22 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Update apt
+  apt: name=libwww-perl libdatetime-perl
+
+- name: Download Cloudwatch scripts
+  get_url: url=http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip dest=/tmp/
+
+- name: Unarchive AWS Scripts
+  unarchive: src=/tmp/CloudWatchMonitoringScripts-1.2.1.zip dest=/opt/ copy=no
+
+- name: Remove tar
+  command: rm /tmp/CloudWatchMonitoringScripts-1.2.1.zip
+
+- name: Run initial Command for testing
+  command: chdir=/opt/aws-scripts-mon './mon-put-instance-data.pl --mem-util --mem-used --mem-avail'
+
+- name: Add Crontab config
+  copy: src=cloudwatch_cron mode=644 owner=root group=root dest=/etc/cron.d/cloudwatch_memory
+  sudo: yes
